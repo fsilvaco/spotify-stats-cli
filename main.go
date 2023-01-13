@@ -16,7 +16,7 @@ const (
 )
 
 func handlerCallback(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "callback.html")
+	http.ServeFile(w, r, "static/callback.html")
 }
 
 func handlerToken(w http.ResponseWriter, r *http.Request) {
