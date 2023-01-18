@@ -21,7 +21,11 @@ func (s Server) responseAuthStaticFile(w http.ResponseWriter, r *http.Request) {
 
 func (s Server) getTokenUser(w http.ResponseWriter, r *http.Request) {
 	token := r.URL.Query().Get("access_token")
-	fmt.Printf(token)
+
+	if token != "" {
+		fmt.Println("Login successful!")
+	}
+
 }
 
 func (s Server) Server() {
