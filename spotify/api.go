@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/fsilvaco/spotify-stats-cli/prompt"
 	"github.com/pkg/browser"
 )
 
@@ -59,7 +60,9 @@ func (s Server) getCurrentUser(token string) {
 		return
 	}
 
-	fmt.Printf("Hi, " + user.DisplayName + "\nChoose which information you want to see:")
+	result := prompt.Select(user.DisplayName)
+
+	fmt.Printf("You choose %q\n", result)
 
 }
 
