@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/fsilvaco/spotify-stats-cli/prompt"
 	"github.com/pkg/browser"
@@ -19,6 +20,12 @@ type Server struct {
 type User struct {
 	DisplayName string `json:"display_name"`
 	Email       string `json:"email"`
+}
+
+type Artists struct {
+	Items []struct {
+		Name string `json:"name"`
+	} `json:"items"`
 }
 
 const (
@@ -53,12 +60,19 @@ func (s Server) getUserTopItems(token string, search string) {
 		return
 	}
 
+	var artists Artists
+
+	err = json.Unmarshal(body, &artists)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	fmt.Println(string(body))
+	fmt.Println("Last 6 months")
+	for i := 0; i < len(artists.Items); i++ {
+		position := strconv.Itoa(i + 1)
+		fmt.Println(position + "- " + artists.Items[i].Name)
+	}
 
 }
 
