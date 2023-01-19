@@ -9,7 +9,7 @@ import (
 func Select(nameUser string) string {
 	prompt := promptui.Select{
 		Label: "Hi, " + nameUser + ". Choose which information you want to see:",
-		Items: []string{"Artist", "Track"},
+		Items: []string{"artists", "tracks"},
 	}
 
 	_, result, err := prompt.Run()
