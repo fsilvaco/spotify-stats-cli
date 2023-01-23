@@ -22,7 +22,7 @@ type User struct {
 	Email       string `json:"email"`
 }
 
-type Artists struct {
+type SpotifyResponse struct {
 	Items []struct {
 		Name string `json:"name"`
 	} `json:"items"`
@@ -34,8 +34,8 @@ const (
 
 var token string
 
-func (s Server) getUserTopItems(token string, search string) {
-	var endpoint = BASE_URL_API + "/top/" + search
+func (s Server) getUserTopItems(token string, searchFor string, slugTimeRange string) {
+	var endpoint = BASE_URL_API + "/top/" + searchFor + "?time_range=" + slugTimeRange
 	client := &http.Client{}
 
 	req, err := http.NewRequest("GET", endpoint, nil)
@@ -60,18 +60,17 @@ func (s Server) getUserTopItems(token string, search string) {
 		return
 	}
 
-	var artists Artists
+	var response SpotifyResponse
 
-	err = json.Unmarshal(body, &artists)
+	err = json.Unmarshal(body, &response)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	fmt.Println("Last 6 months")
-	for i := 0; i < len(artists.Items); i++ {
+	for i := 0; i < len(response.Items); i++ {
 		position := strconv.Itoa(i + 1)
-		fmt.Println(position + "- " + artists.Items[i].Name)
+		fmt.Println(position + "- " + response.Items[i].Name)
 	}
 
 }
@@ -108,10 +107,13 @@ func (s Server) getCurrentUser(token string) {
 		fmt.Println(err)
 		return
 	}
+	searchFor := prompt.SelectTypeForSearch(user.DisplayName)
 
-	result := prompt.Select(user.DisplayName)
+	timeRange, slugTimeRange := prompt.SelectTimeRange()
 
-	s.getUserTopItems(token, result)
+	fmt.Println(timeRange)
+
+	s.getUserTopItems(token, searchFor, slugTimeRange)
 
 }
 

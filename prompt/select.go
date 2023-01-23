@@ -6,10 +6,14 @@ import (
 	"github.com/manifoldco/promptui"
 )
 
-func Select(nameUser string) string {
+var selectLabel string
+var selectItems []string
+
+func selectOption(label string, items []string) string {
+
 	prompt := promptui.Select{
-		Label: "Hi, " + nameUser + ". Choose which information you want to see:",
-		Items: []string{"artists", "tracks"},
+		Label: label,
+		Items: items,
 	}
 
 	_, result, err := prompt.Run()
@@ -20,4 +24,30 @@ func Select(nameUser string) string {
 	}
 
 	return result
+}
+
+func SelectTypeForSearch(userName string) string {
+	selectLabel = "Hi, " + userName + ". Choose which information you want to see"
+	selectItems = []string{"artists", "tracks"}
+	typeForSearch := selectOption(selectLabel, selectItems)
+
+	return typeForSearch
+}
+
+func SelectTimeRange() (string, string) {
+	var slugTimeRange string
+	selectLabel = "In which period?"
+	selectItems = []string{"Last 4 weeks", "Last 6 months", "Several years"}
+	timeRange := selectOption(selectLabel, selectItems)
+
+	switch timeRange {
+	case "Several years":
+		slugTimeRange = "long_term"
+	case "Last 6 months":
+		slugTimeRange = "medium_term"
+	case "Last 4 weeks":
+		slugTimeRange = "short_term"
+	}
+
+	return timeRange, slugTimeRange
 }
