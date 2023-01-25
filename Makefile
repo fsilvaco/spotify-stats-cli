@@ -1,5 +1,5 @@
 build: 
-	go build -o bin/spotify-stats-cli
+	go build -o bin/
 
 run:
 	./bin/spotify-stats-cli login
