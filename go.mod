@@ -4,6 +4,8 @@ go 1.19
 
 require github.com/pkg/browser v0.0.0-20210911075715-681adbf594b8
 
+require github.com/joho/godotenv v1.5.1 // indirect
+
 require (
 	github.com/chzyer/readline v0.0.0-20180603132655-2972be24d48e // indirect
 	github.com/manifoldco/promptui v0.9.0
