@@ -2,16 +2,14 @@ package login
 
 import (
 	"fmt"
-	"log"
-	"os"
 
-	"github.com/joho/godotenv"
+	"github.com/fsilvaco/spotify-stats-cli/env"
 )
 
 func Inicialize() {
-	if err := godotenv.Load(); err != nil {
-		log.Fatalf("Erro ao carregar o arquivo .env: %v", err)
-	}
-	port := os.Getenv("PORT")
-	fmt.Println("Here the port is", port)
+	env.Load()
+	port := env.Get("PORT", "8080")
+	clientId := env.Get("CLIENT_ID", "")
+	fmt.Println("Here the port is", port, clientId)
+
 }
