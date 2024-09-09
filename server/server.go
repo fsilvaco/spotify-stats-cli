@@ -1,10 +1,12 @@
 package server
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"os"
 
+	"github.com/fsilvaco/spotify-stats-cli/token"
 	"github.com/gin-gonic/gin"
 	"github.com/pkg/browser"
 )
@@ -27,21 +29,28 @@ func Initialize() {
 	})
 
 	r.GET("/token", func(c *gin.Context) {
-		token := c.Query("access_token")
-		// token_type := c.Query("token_type")
-		// expires_in := c.Query("expires_in")
+		access_token := c.Query("access_token")
+		token_type := c.Query("token_type")
+		expires_in := c.Query("expires_in")
 
-		if err := os.Setenv("TOKEN", token); err != nil {
-			log.Fatal("error saving token in environment variable")
+		tokenData := token.TokenData{AccessToken: access_token, TokenType: token_type, ExpiresIn: expires_in}
+
+		if err := os.MkdirAll("auth_data", os.ModePerm); err != nil {
+			log.Fatal("error creating tokens directory")
 		}
 
-	})
-	r.GET("/check", func(c *gin.Context) {
+		file, err := os.Create("auth_data/token.json")
+		if err != nil {
+			log.Fatal("error creating token file")
+		}
+		defer file.Close()
 
-		c.JSON(200, gin.H{
-			"token": os.Getenv("TOKEN"),
-		})
+		encoder := json.NewEncoder(file)
+		if err := encoder.Encode(tokenData); err != nil {
+			log.Fatal("error writing token to file")
+		}
 
+		os.Exit(0)
 	})
 
 	r.Run()
