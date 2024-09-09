@@ -1,9 +1,7 @@
 package server
 
 import (
-	"encoding/json"
 	"fmt"
-	"log"
 	"os"
 
 	"github.com/fsilvaco/spotify-stats-cli/token"
@@ -35,20 +33,7 @@ func Initialize() {
 
 		tokenData := token.TokenData{AccessToken: access_token, TokenType: token_type, ExpiresIn: expires_in}
 
-		if err := os.MkdirAll("auth_data", os.ModePerm); err != nil {
-			log.Fatal("error creating tokens directory")
-		}
-
-		file, err := os.Create("auth_data/token.json")
-		if err != nil {
-			log.Fatal("error creating token file")
-		}
-		defer file.Close()
-
-		encoder := json.NewEncoder(file)
-		if err := encoder.Encode(tokenData); err != nil {
-			log.Fatal("error writing token to file")
-		}
+		token.CreateJsonFile(tokenData)
 
 		os.Exit(0)
 	})
