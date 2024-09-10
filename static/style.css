@@ -1,0 +1,50 @@
+*{
+    margin: 0;
+    padding: 0;
+
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+html, body {
+    height: 100vh;
+    background-color: #400073;
+}
+
+.spotify-stats {
+    color: #CBF55C;
+    height: 100%;  
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+.spotify-stats .spotify-stats__success {
+    text-align: center;
+}
+
+
+.spotify-stats .spotify-stats__success img {
+    width: 70px;
+}
+
+.spotify-stats .spotify-stats__success h1 {
+    font-size: 3rem;
+    margin-bottom: 16px;
+    font-weight: bold;
+}
+
+.spotify-stats .spotify-stats__success h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+
+.spotify-stats .spotify-stats__success p {
+    font-size: 1.2rem;
+    font-weight: 300;
+    margin-bottom: 15px;
+    opacity: .7;
+}

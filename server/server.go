@@ -22,7 +22,7 @@ func Initialize() {
 	browser.OpenURL(spotify_auth_url)
 
 	r.GET("/auth", func(c *gin.Context) {
-		c.File("static/auth.html")
+		c.File("static/index.html")
 
 	})
 
